@@ -1,5 +1,4 @@
 #! /usr/bin/python
-
 '''
 An application launcher. Works in any environment with fzf
 and Python (and a working terminal emulator ;-)).
@@ -39,7 +38,7 @@ for cprog in progs:
 fifo.seek(0)
 
 progname = subprocess.check_output(
-        f'sh -c \"fzf --preview \'./get-comment.py {{}}\' --preview-window up:3:wrap <{fifo.name}\"',
+    f'sh -c \"fzf --preview \'./get-comment.py {{}}\' --preview-window up:3:wrap <{fifo.name}\"',
     shell=True).decode('ascii')
 
 # ...and launch that program [ASSUMING NO-ONE HAS THE SAME NAME!!!]
@@ -49,7 +48,9 @@ for cprog in progs:
         # Is it supposed to be run in a terminal?
         if pid == 0:
             if cprog[3] == 'true':
-                os.execv('/bin/sh', ['/bin/sh', '-c', args.terminal_command + ' ' + cprog[2]])
+                os.execv(
+                    '/bin/sh',
+                    ['/bin/sh', '-c', args.terminal_command + ' ' + cprog[2]])
             else:
                 os.execv('/bin/sh', ['/bin/sh', '-c', cprog[2]])
         sys.exit(0)

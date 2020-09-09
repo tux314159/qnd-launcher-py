@@ -15,6 +15,6 @@ desktop_files = glob.glob(application_dir + '*.desktop')
 progs = parsedesktop.parsedesktop(desktop_files)
 for cprog in progs:
     if cprog[0].strip() == args.progname.strip():
-        print('\033[1m\033[34m'+args.progname.strip()+'\033[0m')
+        print('\033[1m\033[34m' + args.progname.strip() + '\033[0m')
         print(cprog[1].strip())
         sys.exit(0)

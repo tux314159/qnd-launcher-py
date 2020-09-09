@@ -11,10 +11,14 @@ def parsedesktop(files):
 
             # Look for keys
             cline = '_'
-            cname = ''; namep = False
-            ccomment = ''; commentp = False
-            cexec = ''; execp = False
-            cterminal = ''; terminalp = False
+            cname = ''
+            namep = False
+            ccomment = ''
+            commentp = False
+            cexec = ''
+            execp = False
+            cterminal = ''
+            terminalp = False
             while cline:
                 cline = cfile.readline()
                 if cline[:5] == 'Name=' and not namep:
