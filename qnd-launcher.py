@@ -21,12 +21,13 @@ parser = argparse.ArgumentParser(description="Application launcher using fzf")
 parser.add_argument(
     "-t",
     "--terminal-command",
-    default=os.environ.get("TERM") + " -e",
+    default="/usr/bin/kitty -e",  # because I like kitty
     help="some desktop entries need to be executed in the terminal. \
                 Use this option to set the terminal command to run those entries. \
-                Defaults to $TERM -e",
+                Defaults to /usr/bin/kitty -e",
 )
 args = parser.parse_args()
+term_cmds = args.terminal_command.split(" ")
 
 application_dir = "/usr/share/applications/"
 desktop_files = glob.glob(application_dir + "*.desktop")
@@ -50,9 +51,10 @@ for cprog in progs:
         # Is it supposed to be run in a terminal?
         if pid == 0:
             if cprog[3] == "true":
-                os.execv(
-                    "/bin/sh", ["/bin/sh", "-c", args.terminal_command + " " + cprog[2]]
+                os.execvp(
+                    term_cmds[0], [term_cmds[0]] + term_cmds[1:] + [cprog[2]]
                 )
             else:
-                os.execv("/bin/sh", ["/bin/sh", "-c", cprog[2]])
+                cprogs = cprog[2].split(" ")
+                os.execvp(cprogs[0], [cprogs[0]] + cprogs[1:])
         sys.exit(0)
