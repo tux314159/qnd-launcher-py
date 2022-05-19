@@ -7,7 +7,7 @@ def parsedesktop(files):
             while cline[0] == '#' or cline[0] == '':
                 cline = cfile.readline().strip()
             if cline != '[Desktop Entry]':
-                continue  # if not, don't pother parsing
+                continue  # if not, don't bother parsing
 
             # Look for keys
             cline = '_'
@@ -42,4 +42,4 @@ def parsedesktop(files):
                 progs.append((cname.strip(), ccomment.strip(), cexec.strip(),
                               cterminal.strip()))
 
-    return progs
+    return sorted(progs)

@@ -2,7 +2,7 @@
 '''
 An application launcher. Works in any environment with fzf
 and Python (and a working terminal emulator ;-)).
-[                      https://xkcd.com/541/^^^^
+                       https://xkcd.com/541/^^^^
 Inspired by https://github.com/Biont/sway-launcher-desktop
 but none of the code was used
 '''
@@ -38,7 +38,7 @@ for cprog in progs:
 fifo.seek(0)
 
 progname = subprocess.check_output(
-    f'sh -c \"fzf --preview \'./get-comment.py {{}}\' --preview-window up:3:wrap <{fifo.name}\"',
+    f'sh -c \"fzf --layout=reverse --preview \'./get-comment.py {{}}\' --preview-window up:3:wrap <{fifo.name}\"',
     shell=True).decode('ascii')
 
 # ...and launch that program [ASSUMING NO-ONE HAS THE SAME NAME!!!]
