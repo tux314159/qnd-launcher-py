@@ -46,10 +46,19 @@ progname = subprocess.check_output(
 
 # ...and launch that program [ASSUMING NO-ONE HAS THE SAME NAME!!!]
 for cprog in progs:
-    if progname.strip() == cprog[0].strip():
-        pid = os.fork()
-        # Is it supposed to be run in a terminal?
-        if pid == 0:
+    if progname.strip() != cprog[0].strip():
+        continue
+
+    pid = os.fork()
+    if pid == 0:
+        # double-fork
+        pid2 = os.fork()
+        if pid2 == 0:
+            # reset env
+            os.chdir(os.getenv("HOME"))
+            os.setsid()
+            os.umask(0)
+            # Is it supposed to be run in a terminal?
             if cprog[3] == "true":
                 os.execvp(
                     term_cmds[0], [term_cmds[0]] + term_cmds[1:] + [cprog[2]]
@@ -58,3 +67,4 @@ for cprog in progs:
                 cprogs = cprog[2].split(" ")
                 os.execvp(cprogs[0], [cprogs[0]] + cprogs[1:])
         sys.exit(0)
+    sys.exit(0)
